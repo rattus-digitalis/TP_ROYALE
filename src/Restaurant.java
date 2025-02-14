@@ -1,8 +1,3 @@
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,68 +5,63 @@ public class Restaurant {
     private String nom;
     private String adresse;
     private String typeCuisine;
-    private Menu menu;
     private List<Employe> employes;
+    private Menu menu;
+    private List<Commande> commandes;
 
-    // 🔹 Constructeur avec initialisation correcte des listes
     public Restaurant(String nom, String adresse, String typeCuisine) {
         this.nom = nom;
         this.adresse = adresse;
         this.typeCuisine = typeCuisine;
-        this.menu = new Menu();
         this.employes = new ArrayList<>();
+        this.menu = new Menu();
+        this.commandes = new ArrayList<>();
     }
 
-    // 🔹 Getters
-    public String getNom() { return nom; }
-    public String getAdresse() { return adresse; }
-    public String getTypeCuisine() { return typeCuisine; }
-    public Menu getMenu() { return menu; }
-    public List<Employe> getEmployes() { return employes; }
-
-    // 🔹 Affiche les informations du restaurant
-    public void afficherRestaurant() {
-        System.out.println("\n📌 Restaurant : " + nom);
-        System.out.println("📍 Adresse    : " + adresse);
-        System.out.println("🍽 Cuisine   : " + typeCuisine);
+    public String getNom() {
+        return nom;
     }
 
-    // 🔹 Sauvegarde le restaurant dans un fichier
+    public Menu getMenu() {
+        return menu;
+    }
+
+    // Méthodes liées aux employés
+    public void ajouterEmploye(Employe employe) {
+        employes.add(employe);
+    }
+
+    public void afficherEmployes() {
+        if (employes.isEmpty()) {
+            System.out.println("Aucun employé dans ce restaurant.");
+            return;
+        }
+        for (Employe employe : employes) {
+            System.out.println(employe);
+        }
+    }
+
+    public void supprimerEmploye(String nomEmploye) {
+        employes.removeIf(e -> e.getNom().equals(nomEmploye));
+        System.out.println("Employé supprimé !");
+    }
+
+    // Méthodes liées aux commandes
+    public void ajouterCommande(Commande commande) {
+        commandes.add(commande);
+    }
+
+    public void afficherCommandes() {
+        if (commandes.isEmpty()) {
+            System.out.println("Aucune commande pour ce restaurant.");
+            return;
+        }
+        for (Commande commande : commandes) {
+            System.out.println(commande);
+        }
+    }
+
     public void sauvegarderRestaurant() {
-        try {
-            File file = new File("data/restaurants.txt");
-            file.getParentFile().mkdirs(); // Assure que le dossier data/ existe
-
-            try (FileWriter writer = new FileWriter(file, true)) {
-                writer.write(nom + ";" + adresse + ";" + typeCuisine + "\n");
-                System.out.println("✅ Restaurant sauvegardé avec succès !");
-            }
-        } catch (IOException e) {
-            System.out.println("❌ Erreur lors de la sauvegarde du restaurant : " + e.getMessage());
-        }
-    }
-
-    // 🔹 Charge la liste des restaurants depuis le fichier restaurants.txt
-    public static List<Restaurant> chargerRestaurants() {
-        List<Restaurant> restaurants = new ArrayList<>();
-        File file = new File("data/restaurants.txt");
-
-        if (!file.exists()) {
-            System.out.println("⚠ Aucun restaurant enregistré.");
-            return restaurants;
-        }
-
-        try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
-            String ligne;
-            while ((ligne = reader.readLine()) != null) {
-                String[] infos = ligne.split(";");
-                if (infos.length == 3) {
-                    restaurants.add(new Restaurant(infos[0], infos[1], infos[2]));
-                }
-            }
-        } catch (IOException e) {
-            System.out.println("❌ Erreur lors du chargement des restaurants : " + e.getMessage());
-        }
-        return restaurants;
+        // Implémentation de la sauvegarde si nécessaire.
     }
 }
