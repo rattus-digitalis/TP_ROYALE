@@ -1,6 +1,8 @@
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class GestionRestaurants {
     private static List<Restaurant> restaurants = new ArrayList<>();
@@ -18,7 +20,7 @@ public class GestionRestaurants {
             System.out.println("6. Prendre une commande pour un restaurant");
             System.out.println("7. Afficher toutes les commandes d'un restaurant");
             System.out.println("8. Sauvegarder les commandes d'un restaurant");
-            System.out.println("10. Quitter");
+            System.out.println("9. Quitter");
             System.out.print("Choix : ");
 
             int choix = scanner.nextInt();
@@ -33,8 +35,7 @@ public class GestionRestaurants {
                 case 6 -> prendreCommande(scanner);
                 case 7 -> afficherCommandes(scanner);
                 case 8 -> sauvegarderCommandes(scanner);
-                case 9 -> chargerCommandes(scanner);
-                case 10 -> {
+                case 9 -> {
                     scanner.close();
                     System.out.println("🔹 Fermeture du programme.");
                     return;
@@ -84,7 +85,19 @@ public class GestionRestaurants {
         double salaire = scanner.nextDouble();
         scanner.nextLine();
 
-        Employe employe = new Employe(nom, prenom, role, salaire);
+        // Demander la date d'embauche
+        System.out.print("Date d'embauche (format yyyy-MM-dd) : ");
+        String dateString = scanner.nextLine();
+        Date dateEmbauche = null;
+        try {
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            dateEmbauche = dateFormat.parse(dateString);
+        } catch (Exception e) {
+            System.out.println("❌ Format de date invalide, la date actuelle sera utilisée.");
+            dateEmbauche = new Date();  // Si le format est incorrect, utiliser la date actuelle
+        }
+
+        Employe employe = new Employe(nom, prenom, role, salaire, dateEmbauche);
         restaurants.get(index).ajouterEmploye(employe);
         System.out.println("✅ Employé ajouté !");
     }

@@ -1,4 +1,6 @@
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
 
@@ -37,7 +39,6 @@ public class Main {
                 case 6 -> prendreCommande(scanner);
                 case 7 -> afficherCommandes(scanner);
                 case 8 -> sauvegarderCommandes(scanner);
-                case 9 -> chargerCommandes(scanner);
                 case 10 -> {
                     scanner.close();
                     System.out.println("🔹 Fermeture du programme.");
@@ -88,7 +89,19 @@ public class Main {
         double salaire = scanner.nextDouble();
         scanner.nextLine();
 
-        Employe employe = new Employe(nom, prenom, role, salaire);
+        // Demander la date d'embauche
+        System.out.print("Date d'embauche (format yyyy-MM-dd) : ");
+        String dateString = scanner.nextLine();
+        Date dateEmbauche = null;
+        try {
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            dateEmbauche = dateFormat.parse(dateString);
+        } catch (Exception e) {
+            System.out.println("❌ Format de date invalide, la date actuelle sera utilisée.");
+            dateEmbauche = new Date();  // Si le format est incorrect, utiliser la date actuelle
+        }
+
+        Employe employe = new Employe(nom, prenom, role, salaire, dateEmbauche);
         restaurants.get(index).ajouterEmploye(employe);
         System.out.println("✅ Employé ajouté !");
     }
