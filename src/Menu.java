@@ -1,5 +1,3 @@
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,15 +6,27 @@ public class Menu {
 
     public void ajouterPlat(Plat plat) {
         plats.add(plat);
-        sauvegarderPlat(plat);
     }
 
-    public void sauvegarderPlat(Plat plat) {
-        try (FileWriter writer = new FileWriter("data/restaurants.txt", true)) {
-            writer.write(plat.getNom() + ";" + plat.getPrix() + "\n");
-            System.out.println("Plat ajouté au menu !");
-        } catch (IOException e) {
-            System.out.println("Erreur de sauvegarde : " + e.getMessage());
+    // ✅ Affiche tous les plats du menu
+    public void afficherMenu() {
+        if (plats.isEmpty()) {
+            System.out.println("⚠ Le menu est vide.");
+            return;
         }
+        System.out.println("\n📋 Menu du restaurant :");
+        for (Plat plat : plats) {
+            System.out.println("- " + plat.getNom() + " : " + plat.getPrix() + "€");
+        }
+    }
+
+    // ✅ Recherche un plat par son nom
+    public Plat trouverPlat(String nomPlat) {
+        for (Plat plat : plats) {
+            if (plat.getNom().equalsIgnoreCase(nomPlat)) {
+                return plat;
+            }
+        }
+        return null; // Plat non trouvé
     }
 }

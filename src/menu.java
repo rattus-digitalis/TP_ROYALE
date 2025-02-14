@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 import java.util.List;
 
-public class Menu {
+public class menu {
     private List<Plat> plats = new ArrayList<>();
 
     public void ajouterPlat(Plat plat) {
