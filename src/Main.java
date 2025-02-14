@@ -22,7 +22,6 @@ public class Main {
             System.out.println("6. Prendre une commande pour un restaurant");
             System.out.println("7. Afficher toutes les commandes d'un restaurant");
             System.out.println("8. Sauvegarder les commandes d'un restaurant");
-            System.out.println("9. Charger les commandes d'un restaurant");
             System.out.println("10. Quitter");
             System.out.print("Choix : ");
 
