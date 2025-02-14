@@ -1,0 +1,6 @@
+mcdo;orleans;fastfood
+mcdo;paris;fastfood
+mcdo;orleans;fastfood
+pizza;paris;pizza
+mcdo;orleans;fastfood
+mcdo;orleans;fastfood

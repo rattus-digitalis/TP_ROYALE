@@ -1,5 +1,4 @@
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,15 +11,24 @@ public class Commande {
         total += plat.getPrix();
     }
 
-    public void sauvegarderCommande() {
-        try (FileWriter writer = new FileWriter("data/commandes.txt", true)) {
-            for (Plat plat : plats) {
-                writer.write(plat.toString() + "\n");
-            }
-            writer.write("Total : " + total + "€\n");
-            System.out.println("Commande sauvegardée !");
-        } catch (IOException e) {
-            System.out.println("Erreur de sauvegarde : " + e.getMessage());
+    public void afficherCommande() {
+        if (plats.isEmpty()) {
+            System.out.println("⚠ La commande est vide.");
+            return;
         }
+
+        System.out.println("\n📋 Contenu de la commande :");
+        for (Plat plat : plats) {
+            System.out.println("- " + plat.getNom() + " : " + plat.getPrix() + "€");
+        }
+        System.out.println("💰 Total : " + total + "€");
+    }
+
+    public double getTotal() {
+        return total;
+    }
+
+    public List<Plat> getPlats() {
+        return plats;
     }
 }

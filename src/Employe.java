@@ -1,6 +1,3 @@
-import java.io.FileWriter;
-import java.io.IOException;
-
 public class Employe {
     private String nom;
     private String prenom;
@@ -14,12 +11,19 @@ public class Employe {
         this.salaire = salaire;
     }
 
-    public void sauvegarderEmploye() {
-        try (FileWriter writer = new FileWriter("data/employes.txt", true)) {
-            writer.write(nom + ";" + prenom + ";" + role + ";" + salaire + "\n");
-            System.out.println("Employé sauvegardé !");
-        } catch (IOException e) {
-            System.out.println("Erreur de sauvegarde : " + e.getMessage());
-        }
+    public String getNom() {
+        return nom;
+    }
+
+    public String getPrenom() {
+        return prenom;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public double getSalaire() {
+        return salaire;
     }
 }
