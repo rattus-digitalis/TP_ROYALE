@@ -14,7 +14,6 @@ public class Commande implements Serializable {
         plats.add(plat);
     }
 
-    // Calculer le prix total de la commande
     public double calculerTotal() {
         double total = 0;
         for (Plat plat : plats) {

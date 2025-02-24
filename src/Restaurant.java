@@ -26,7 +26,6 @@ public class Restaurant {
         return menu;
     }
 
-    // Méthodes liées aux employés
     public void ajouterEmploye(Employe employe) {
         employes.add(employe);
     }
@@ -46,7 +45,6 @@ public class Restaurant {
         System.out.println("Employé supprimé !");
     }
 
-    // Méthodes liées aux commandes
     public void ajouterCommande(Commande commande) {
         commandes.add(commande);
     }
@@ -62,6 +60,6 @@ public class Restaurant {
     }
 
     public void sauvegarderRestaurant() {
-        // Implémentation de la sauvegarde si nécessaire.
+        // sauvegarde a faire 
     }
 }

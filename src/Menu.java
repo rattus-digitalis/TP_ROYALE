@@ -7,8 +7,6 @@ public class Menu {
     public void ajouterPlat(Plat plat) {
         plats.add(plat);
     }
-
-    // ✅ Affiche tous les plats du menu
     public void afficherMenu() {
         if (plats.isEmpty()) {
             System.out.println("⚠ Le menu est vide.");
@@ -20,7 +18,6 @@ public class Menu {
         }
     }
 
-    // ✅ Recherche un plat par son nom
     public Plat trouverPlat(String nomPlat) {
         for (Plat plat : plats) {
             if (plat.getNom().equalsIgnoreCase(nomPlat)) {

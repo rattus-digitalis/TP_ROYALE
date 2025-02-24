@@ -17,7 +17,6 @@ public class Employe implements Serializable {
         this.dateEmbauche = dateEmbauche;
     }
 
-    // Getters
     public String getNom() {
         return nom;
     }
