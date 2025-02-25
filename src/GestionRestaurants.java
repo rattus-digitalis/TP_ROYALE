@@ -85,7 +85,7 @@ public class GestionRestaurants {
         double salaire = scanner.nextDouble();
         scanner.nextLine();
 
-        // Demander la date d'embauche
+
         System.out.print("Date d'embauche (format yyyy-MM-dd) : ");
         String dateString = scanner.nextLine();
         Date dateEmbauche = null;
@@ -94,7 +94,7 @@ public class GestionRestaurants {
             dateEmbauche = dateFormat.parse(dateString);
         } catch (Exception e) {
             System.out.println("❌ Format de date invalide, la date actuelle sera utilisée.");
-            dateEmbauche = new Date();  // Si le format est incorrect, utiliser la date actuelle
+            dateEmbauche = new Date(); 
         }
 
         Employe employe = new Employe(nom, prenom, role, salaire, dateEmbauche);
