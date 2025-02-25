@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Scanner;
 
 public class Main {
-    private static List<Restaurant> restaurants = new ArrayList<>();
+    private static final List<Restaurant> restaurants = new ArrayList<>();
 
     public static void main(String[] args) {
         menuPrincipal();
@@ -27,6 +27,11 @@ public class Main {
             System.out.println("10. Quitter");
             System.out.print("Choix : ");
 
+            if (!scanner.hasNextInt()) {
+                System.out.println("❌ Entrée invalide. Veuillez saisir un nombre.");
+                scanner.next();
+                continue;
+            }
             int choix = scanner.nextInt();
             scanner.nextLine();
 
@@ -59,16 +64,20 @@ public class Main {
 
         Restaurant resto = new Restaurant(nom, adresse, typeCuisine);
         restaurants.add(resto);
-        resto.sauvegarderRestaurant();
         System.out.println("✅ Restaurant ajouté !");
     }
 
-    private static void ajouterEmploye(Scanner scanner) {
+    private static void afficherRestaurants() {
         if (restaurants.isEmpty()) {
-            System.out.println("❌ Aucun restaurant disponible.");
+            System.out.println("⚠ Aucun restaurant enregistré.");
             return;
         }
+        for (int i = 0; i < restaurants.size(); i++) {
+            System.out.println((i + 1) + ". " + restaurants.get(i).getNom());
+        }
+    }
 
+    private static void ajouterEmploye(Scanner scanner) {
         afficherRestaurants();
         System.out.print("Choisissez un restaurant (ID) : ");
         int index = scanner.nextInt() - 1;
@@ -89,50 +98,19 @@ public class Main {
         double salaire = scanner.nextDouble();
         scanner.nextLine();
 
-        // Demander la date d'embauche
         System.out.print("Date d'embauche (format yyyy-MM-dd) : ");
         String dateString = scanner.nextLine();
-        Date dateEmbauche = null;
+        Date dateEmbauche;
         try {
-            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-            dateEmbauche = dateFormat.parse(dateString);
+            dateEmbauche = new SimpleDateFormat("yyyy-MM-dd").parse(dateString);
         } catch (Exception e) {
             System.out.println("❌ Format de date invalide, la date actuelle sera utilisée.");
-            dateEmbauche = new Date();  // Si le format est incorrect, utiliser la date actuelle
+            dateEmbauche = new Date();
         }
 
         Employe employe = new Employe(nom, prenom, role, salaire, dateEmbauche);
         restaurants.get(index).ajouterEmploye(employe);
         System.out.println("✅ Employé ajouté !");
-    }
-
-    private static void afficherRestaurants() {
-        if (restaurants.isEmpty()) {
-            System.out.println("⚠ Aucun restaurant enregistré.");
-            return;
-        }
-        for (int i = 0; i < restaurants.size(); i++) {
-            System.out.println((i + 1) + ". " + restaurants.get(i).getNom());
-        }
-    }
-
-    private static void afficherEmployes(Scanner scanner) {
-        if (restaurants.isEmpty()) {
-            System.out.println("❌ Aucun restaurant disponible.");
-            return;
-        }
-
-        afficherRestaurants();
-        System.out.print("Choisissez un restaurant (ID) : ");
-        int index = scanner.nextInt() - 1;
-        scanner.nextLine();
-
-        if (index < 0 || index >= restaurants.size()) {
-            System.out.println("❌ Restaurant invalide.");
-            return;
-        }
-
-        restaurants.get(index).afficherEmployes();
     }
 
     private static void supprimerEmploye(Scanner scanner) {
@@ -150,14 +128,10 @@ public class Main {
         String nomEmploye = scanner.nextLine();
 
         restaurants.get(index).supprimerEmploye(nomEmploye);
+        System.out.println("✅ Employé supprimé !");
     }
 
-    private static void ajouterPlat(Scanner scanner) {
-        if (restaurants.isEmpty()) {
-            System.out.println("❌ Aucun restaurant disponible.");
-            return;
-        }
-
+    private static void afficherEmployes(Scanner scanner) {
         afficherRestaurants();
         System.out.print("Choisissez un restaurant (ID) : ");
         int index = scanner.nextInt() - 1;
@@ -168,74 +142,6 @@ public class Main {
             return;
         }
 
-        System.out.print("Nom du plat : ");
-        String nomPlat = scanner.nextLine();
-        System.out.print("Prix du plat : ");
-        double prix = scanner.nextDouble();
-        scanner.nextLine();
-
-        Plat plat = new Plat(nomPlat, prix);
-        restaurants.get(index).getMenu().ajouterPlat(plat);
-        System.out.println("✅ Plat ajouté au menu !");
-    }
-
-    private static void prendreCommande(Scanner scanner) {
-        if (restaurants.isEmpty()) {
-            System.out.println("❌ Aucun restaurant disponible.");
-            return;
-        }
-
-        afficherRestaurants();
-        System.out.print("Choisissez un restaurant (ID) : ");
-        int index = scanner.nextInt() - 1;
-        scanner.nextLine();
-
-        if (index < 0 || index >= restaurants.size()) {
-            System.out.println("❌ Restaurant invalide.");
-            return;
-        }
-
-        Restaurant resto = restaurants.get(index);
-        resto.getMenu().afficherMenu();
-
-        Commande commande = new Commande();
-        while (true) {
-            System.out.print("Ajoutez un plat au panier (nom du plat ou 'fin' pour terminer) : ");
-            String nomPlat = scanner.nextLine();
-            if (nomPlat.equalsIgnoreCase("fin")) break;
-
-            Plat platChoisi = resto.getMenu().trouverPlat(nomPlat);
-            if (platChoisi != null) {
-                commande.ajouterPlat(platChoisi);
-                System.out.println("✅ Plat ajouté à la commande !");
-            } else {
-                System.out.println("❌ Plat introuvable.");
-            }
-        }
-
-        resto.ajouterCommande(commande);
-        System.out.println("✅ Commande enregistrée !");
-    }
-
-    private static void afficherCommandes(Scanner scanner) {
-        afficherRestaurants();
-        System.out.print("Choisissez un restaurant (ID) : ");
-        int index = scanner.nextInt() - 1;
-        scanner.nextLine();
-
-        if (index < 0 || index >= restaurants.size()) {
-            System.out.println("❌ Restaurant invalide.");
-            return;
-        }
-
-        restaurants.get(index).afficherCommandes();
-    }
-
-    private static void sauvegarderCommandes(Scanner scanner) {
-        System.out.println("🔹 Fonction à implémenter.");
-    }
-
-    private static void chargerCommandes(Scanner scanner) {
-        System.out.println("🔹 Fonction à implémenter.");
+        restaurants.get(index).afficherEmployes();
     }
 }

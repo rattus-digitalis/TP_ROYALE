@@ -25,6 +25,10 @@ public class Employe implements Serializable {
         return dateEmbauche;
     }
 
+    public double getSalaire() {
+    return salaire;
+}
+
     @Override
     public String toString() {
         return nom + " " + prenom + " (" + role + ")";
