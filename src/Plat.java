@@ -10,7 +10,6 @@ public class Plat implements Serializable {
         this.prix = prix;
     }
 
-    // Getters
     public String getNom() {
         return nom;
     }
